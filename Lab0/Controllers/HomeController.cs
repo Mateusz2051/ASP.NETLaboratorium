@@ -7,7 +7,6 @@ namespace Lab0.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private static string[] _names = ["Adam", "Ewa", "Roman"];
 
     public HomeController(ILogger<HomeController> logger)
     {
