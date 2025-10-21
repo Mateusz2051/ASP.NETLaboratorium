@@ -16,7 +16,14 @@
     <h2>Lista Komputerow</h2>
     <a class="btn btn-outline-primary" asp-controller="Computer" asp-action="Create" >Dodaj Kontakt</a>
     <h3>Lista</h3>
-    
+    <ol>
+        @{
+            foreach (var obj in Model)
+            {
+                <li>@obj.Name</li>
+            }
+        }
+    </ol>
     </div>
 </body>
 </html>

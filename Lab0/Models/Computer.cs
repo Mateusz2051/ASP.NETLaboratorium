@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab0.Models;
 
-public class Computer
+public class Computer : IEnumerable
 {
     [HiddenInput]
     public int Id { get; set; }
@@ -20,5 +21,10 @@ public class Computer
     public string Producer { get; set; }
     
     [DataType(DataType.DateTime)]
-    public DateOnly ProductionDate { get; set; } 
+    public DateOnly ProductionDate { get; set; }
+
+    public IEnumerator GetEnumerator()
+    {
+        throw new NotImplementedException();
+    }
 }
