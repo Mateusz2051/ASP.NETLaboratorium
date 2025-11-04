@@ -4,21 +4,20 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Lab0.Controllers;
 
-public class ComputerController : Controller
+public class ComputerController(IComputerService service) : Controller
 
 {
-    private static Dictionary<int, Computer> _computers = new()
-    {
-        { 1, new Computer() { Id = 1, Name = "Computer 1", Producer = "Abc", Cpu = "It", Gpu = "Ad", Ram = "T", ProductionDate = DateOnly.Parse("2025-01-01") } },
-        { 2, new Computer() { Id = 2, Name = "Computer 2", Producer = "Cba", Cpu = "Ad", Gpu = "Nv", Ram = "Q",  ProductionDate = DateOnly.Parse("2024-01-02") } },
 
-};
-    private static int i = 0;
     public IActionResult Index()
     {
-        return View (_computers.Values.ToList());
+        return View (service.GetComputers());
     }
 
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
     [HttpPost]
     public IActionResult Create(Computer model)
     {
@@ -27,28 +26,35 @@ public class ComputerController : Controller
             return View(model);
         }
 
-        model.Id = +1;
-        _computers.Add(model.Id, model);
+        service.AddComputer(model);
         return RedirectToAction("Index");
     }
 
     public IActionResult Details(int id)
     {
-        if(_computers.ContainsKey(id)){
-        return View(_computers[id]);
-        }else{
-        return NotFound();
+        var Computer = service.GetComputerById(id);
+        if (Computer is not null)
+        {
+            return View(Computer);
+        }
+        else
+        {
+            return NotFound();
         }
     }
     
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        if(_computers.ContainsKey(id)){
-            return View(_computers[id]);
-        }else{
+        var Computer = service.GetComputerById(id);
+        if (Computer is not null)
+        {
+            return View(Computer);
+        }
+        else
+        {
             return NotFound();
-        }    
+        }   
     }
 
     [HttpPost]
@@ -57,23 +63,28 @@ public class ComputerController : Controller
         if(ModelState.IsValid){
             return View(model);
         }
-        _computers[model.Id] = model;
+
+        service.UpdateComputer(model);
         return RedirectToAction("Index");;
     }
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        if(_computers.ContainsKey(id)){
-            return View(_computers[id]);
-        }else{
+        var Computer = service.GetComputerById(id);
+        if (Computer is not null)
+        {
+            return View(Computer);
+        }
+        else
+        {
             return NotFound();
-        }    
+        }
     }
 
     [HttpPost]
     public IActionResult DeleteConfirm(int Id)
     {
-        _computers.Remove(Id);
+        service.DeleteComputerById(Id);
         return RedirectToAction("Index");
     }
 }
