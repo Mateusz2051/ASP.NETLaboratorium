@@ -1,0 +1,12 @@
+﻿@model Computer
+
+@{
+    ViewBag.Title = "Title";
+    Layout = "_Layout";
+}
+
+<h2>Czy na pewno chcesz usunąc komputer: @Model.Id</h2>
+<form asp-action="DeleteConfirm">
+    <input asp-for="Id"/>
+    <button class="btn btn-danger">Usuń</button>
+</form>

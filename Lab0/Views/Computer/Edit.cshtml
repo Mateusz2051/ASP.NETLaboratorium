@@ -5,22 +5,16 @@
     Layout = "_Layout";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
 <div>
-    <h2>Dodaj Komputer</h2>
-    <form asp-action="Create" method="get">
+    <h2>Edytuj Komputer</h2>
+    <form asp-action="Edit" method="get">
+        <input asp-for="Id"/>
         <div class="mb-3">
             <label class="form-label" asp-for="Name"></label>
             <input class="form-control" asp-for="Name"/>
             <span class="text-danger" asp-validation-for="Name"></span>
         </div>
-        
+
         <div class="mb-3">
             <label class="form-label" asp-for="Cpu"></label>
             <input class="form-control" asp-for="Cpu"/>
@@ -33,30 +27,30 @@
             <span class="text-danger" asp-validation-for="Ram"></span>
         </div>
 
-        
+
         <div class="mb-3">
             <label class="form-label" asp-for="Gpu"></label>
             <input class="form-control" asp-for="Gpu"/>
             <span class="text-danger" asp-validation-for="Gpu"></span>
         </div>
-        
-        
+
+
         <div class="mb-3">
             <label class="form-label" asp-for="Producer"></label>
             <input class="form-control" asp-for="Producer"/>
             <span class="text-danger" asp-validation-for="Producer"></span>
         </div>
-        
-        
+
+
         <div class="mb-3">
             <label class="form-label" asp-for="ProductionDate"></label>
             <input class="form-control" asp-for="ProductionDate"/>
             <span class="text-danger" asp-validation-for="ProductionDate"></span>
         </div>
-        
-        
-        
+
+        <div class="mb-3">
+            <button asp-action="Edit">Zapisz</button>
+        </div>
+
     </form>
 </div>
-</body>
-</html>
