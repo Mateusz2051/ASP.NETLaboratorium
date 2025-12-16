@@ -42,9 +42,9 @@
         
         
         <div class="mb-3">
-            <label class="form-label" asp-for="Producer"></label>
-            <input class="form-control" asp-for="Producer"/>
-            <span class="text-danger" asp-validation-for="Producer"></span>
+            <label class="form-label" asp-for="ManufacturerId"></label>
+            <select class="form-control" asp-for="ManufacturerId" asp-items="@Model.Manufacturers"></select>
+            <span class="text-danger" asp-validation-for="ManufacturerId"></span>
         </div>
         
         

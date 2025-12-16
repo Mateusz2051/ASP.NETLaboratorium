@@ -1,6 +1,7 @@
 using Data;
 using Data.Entities;
 using Lab0.Mappers;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lab0.Models;
 
@@ -15,7 +16,10 @@ public class EFComputerService : IComputerService
 
     public List<Computer> GetComputers()
     {
-        return _context.Computers.Select(e => ComputerMapper.FromEntity(e)).ToList();
+        return _context.Computers
+            .Include(c => c.Manufacturer)
+            .Select(e => ComputerMapper.FromEntity(e))
+            .ToList();
     }
 
     public void AddComputer(Computer computer)
@@ -33,7 +37,7 @@ public class EFComputerService : IComputerService
         }
 
         entity.Name = computer.Name;
-        entity.Producer = computer.Producer;
+        entity.ManufacturerId = computer.ManufacturerId;
         entity.Cpu = computer.Cpu;
         entity.Ram = computer.Ram;
         entity.Gpu = computer.Gpu;
@@ -59,7 +63,12 @@ public class EFComputerService : IComputerService
 
     public Computer? GetComputerById(int id)
     {
-        var entity = _context.Computers.Find(id);
+        var entity = _context.Computers.Include(c => c.Manufacturer).FirstOrDefault(c => c.Id == id);
         return entity is null ? null : ComputerMapper.FromEntity(entity);
+    }
+
+    public List<ManufacturerEntity> FindAllManufacturers()
+    {
+        return _context.Manufacturers.ToList();
     }
 }

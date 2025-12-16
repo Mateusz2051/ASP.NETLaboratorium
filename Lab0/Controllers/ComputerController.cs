@@ -1,6 +1,7 @@
 ﻿using Lab0.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Lab0.Controllers;
 
@@ -16,13 +17,21 @@ public class ComputerController(IComputerService service) : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        return View();
+        var model = new Computer();
+        model.Manufacturers = service.FindAllManufacturers()
+            .Select(m => new SelectListItem() { Value = m.Id.ToString(), Text = m.Name })
+            .ToList();
+        return View(model);
     }
+    
     [HttpPost]
     public IActionResult Create(Computer model)
     {
         if (!ModelState.IsValid)
         {
+            model.Manufacturers = service.FindAllManufacturers()
+                .Select(m => new SelectListItem() { Value = m.Id.ToString(), Text = m.Name })
+                .ToList();
             return View(model);
         }
 
@@ -49,6 +58,9 @@ public class ComputerController(IComputerService service) : Controller
         var Computer = service.GetComputerById(id);
         if (Computer is not null)
         {
+            Computer.Manufacturers = service.FindAllManufacturers()
+                .Select(m => new SelectListItem() { Value = m.Id.ToString(), Text = m.Name })
+                .ToList();
             return View(Computer);
         }
         else

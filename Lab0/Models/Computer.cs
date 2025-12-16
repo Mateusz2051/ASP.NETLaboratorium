@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Lab0.Models;
 
-public class Computer : IEnumerable
+public class Computer
 {
     [HiddenInput]
     public int Id { get; set; }
@@ -13,9 +15,16 @@ public class Computer : IEnumerable
     [Display(Name = "Nazwa")]
     public string Name { get; set; }
     
-    [StringLength(maximumLength: 50, MinimumLength = 1)]
+    [HiddenInput]
     [Display(Name = "Producent")]
-    public string Producer { get; set; }
+    public int ManufacturerId { get; set; }
+
+    [ValidateNever]
+    [Display(Name = "Producent")]
+    public string ManufacturerName { get; set; }
+
+    [ValidateNever]
+    public List<SelectListItem> Manufacturers { get; set; }
     
     [StringLength(maximumLength: 40, MinimumLength = 1)]
     [Display(Name = "Procesor")]
@@ -31,9 +40,4 @@ public class Computer : IEnumerable
     [DataType(DataType.Date)]
     [Display(Name = "Data Produkcji")]
     public DateOnly ProductionDate { get; set; }
-
-    public IEnumerator GetEnumerator()
-    {
-        throw new NotImplementedException();
-    }
 }

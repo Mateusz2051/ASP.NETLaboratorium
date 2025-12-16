@@ -1,4 +1,6 @@
-﻿namespace Lab0.Models;
+﻿using Data.Entities;
+
+namespace Lab0.Models;
 
 public interface IComputerService
 {
@@ -7,4 +9,5 @@ public interface IComputerService
     bool UpdateComputer(Computer computer);
     bool DeleteComputerById(int Id);
     Computer? GetComputerById(int Id);
+    List<ManufacturerEntity> FindAllManufacturers();
 }

@@ -11,7 +11,8 @@ public class ComputerMapper
         {
             Id = entity.Id,
             Name = entity.Name,
-            Producer = entity.Producer,
+            ManufacturerId = entity.ManufacturerId,
+            ManufacturerName = entity.Manufacturer?.Name ?? "",
             Cpu = entity.Cpu,
             Ram = entity.Ram,
             Gpu = entity.Gpu,
@@ -25,7 +26,7 @@ public class ComputerMapper
         {
             Id = model.Id,
             Name = model.Name,
-            Producer = model.Producer,
+            ManufacturerId = model.ManufacturerId,
             Cpu = model.Cpu,
             Ram = model.Ram,
             Gpu = model.Gpu,

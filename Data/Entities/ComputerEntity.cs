@@ -11,10 +11,6 @@ public class ComputerEntity
     [MaxLength(50)]
     [Required]
     public string Name { get; set; }
-
-    [MaxLength(50)]
-    [Required]
-    public string Producer { get; set; }
     
     [MaxLength(50)]
     public string Cpu { get; set; }
@@ -27,4 +23,7 @@ public class ComputerEntity
 
     [Column("production_date")]
     public DateOnly ProductionDate { get; set; }
+
+    public int ManufacturerId { get; set; }
+    public ManufacturerEntity? Manufacturer { get; set; }
 }
