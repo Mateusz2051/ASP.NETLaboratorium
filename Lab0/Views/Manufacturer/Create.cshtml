@@ -1,0 +1,42 @@
+@model Data.Entities.ManufacturerEntity
+
+<h1>Dodaj Producenta</h1>
+
+<form asp-action="Create">
+    <div class="form-group mb-3">
+        <label asp-for="Name" class="form-label">Nazwa</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Nip" class="form-label">NIP</label>
+        <input asp-for="Nip" class="form-control" />
+        <span asp-validation-for="Nip" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Regon" class="form-label">REGON</label>
+        <input asp-for="Regon" class="form-control" />
+        <span asp-validation-for="Regon" class="text-danger"></span>
+    </div>
+
+    <h4>Adres</h4>
+    <div class="form-group mb-3">
+        <label asp-for="Address.City" class="form-label">Miasto</label>
+        <input asp-for="Address.City" class="form-control" />
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Address.Street" class="form-label">Ulica</label>
+        <input asp-for="Address.Street" class="form-control" />
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Address.PostalCode" class="form-label">Kod Pocztowy</label>
+        <input asp-for="Address.PostalCode" class="form-control" />
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Address.Region" class="form-label">Region</label>
+        <input asp-for="Address.Region" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+</form>

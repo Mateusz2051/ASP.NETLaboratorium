@@ -7,8 +7,12 @@
 
 <h1>Nazwa</h1>
 @Model.Name
-<h1>Producent</h1>
-@Model.Producer
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ManufacturerName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ManufacturerName)
+        </dd>
 <h1>Procesor</h1>
 @Model.Cpu
 <h1>Ram</h1>

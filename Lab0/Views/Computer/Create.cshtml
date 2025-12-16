@@ -14,7 +14,9 @@
 <body>
 <div>
     <h2>Dodaj Komputer</h2>
-    <form asp-action="Create" method="get">
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form asp-action="Create" method="post">
         <div class="mb-3">
             <label class="form-label" asp-for="Name"></label>
             <input class="form-control" asp-for="Name"/>
@@ -42,20 +44,26 @@
         
         
         <div class="mb-3">
-            <label class="form-label" asp-for="ManufacturerId"></label>
-            <select class="form-control" asp-for="ManufacturerId" asp-items="@Model.Manufacturers"></select>
-            <span class="text-danger" asp-validation-for="ManufacturerId"></span>
-        </div>
-        
-        
-        <div class="mb-3">
-            <label class="form-label" asp-for="ProductionDate"></label>
+        <label class="form-label">Filtr producentów</label>
+        <input class="form-control" type="text" id="filter" placeholder="Wpisz aby filtrować..." />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="ManufacturerId"></label>
+        <select class="form-control" asp-for="ManufacturerId" asp-items="@Model.Manufacturers" id="ManufacturerId"></select>
+        <span class="text-danger" asp-validation-for="ManufacturerId"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="ProductionDate"></label>
             <input class="form-control" asp-for="ProductionDate"/>
             <span class="text-danger" asp-validation-for="ProductionDate"></span>
         </div>
         
         
-        
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Utwórz</button>
+        </div>
     </form>
 </div>
 </body>

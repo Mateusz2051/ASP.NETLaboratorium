@@ -1,0 +1,30 @@
+@model IEnumerable<Data.Entities.ManufacturerEntity>
+
+<h1>Producenci</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Dodaj nowego</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>NIP</th>
+            <th>Miasto</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Nip</td>
+            <td>@item.Address?.City</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

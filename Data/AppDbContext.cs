@@ -43,11 +43,12 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
             Id = ADMIN_ID,
             Email = "adam@wsei.edu.pl",
             EmailConfirmed = true,
-            UserName = "adam",
-            NormalizedUserName = "ADAM",
-            NormalizedEmail = "ADAM@WSEI.EDU.PL"
+            UserName = "adam@wsei.edu.pl",
+            NormalizedUserName = "ADAM@WSEI.EDU.PL",
+            NormalizedEmail = "ADAM@WSEI.EDU.PL",
+            SecurityStamp = Guid.NewGuid().ToString()
         };
-
+        
         PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
         admin.PasswordHash = ph.HashPassword(admin, "1234abcd!@#$ABCD");
         
@@ -76,9 +77,10 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
             Id = USER_ID,
             Email = "student@wsei.edu.pl",
             EmailConfirmed = true,
-            UserName = "student",
-            NormalizedUserName = "STUDENT",
-            NormalizedEmail = "STUDENT@WSEI.EDU.PL"
+            UserName = "student@wsei.edu.pl",
+            NormalizedUserName = "STUDENT@WSEI.EDU.PL",
+            NormalizedEmail = "STUDENT@WSEI.EDU.PL",
+            SecurityStamp = Guid.NewGuid().ToString()
         };
         student.PasswordHash = ph.HashPassword(student, "1234abcd!@#$ABCD");
         modelBuilder.Entity<IdentityUser>().HasData(student);

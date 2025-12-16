@@ -10,10 +10,10 @@ namespace Lab0.Controllers;
 public class ComputerController(IComputerService service) : Controller
 
 {
-
-    public IActionResult Index()
+    [AllowAnonymous]
+    public IActionResult Index(int page = 1, int size = 10)
     {
-        return View (service.GetComputers());
+        return View(service.GetComputersForPaging(page, size));
     }
 
     [HttpGet]
@@ -74,12 +74,16 @@ public class ComputerController(IComputerService service) : Controller
     [HttpPost]
     public IActionResult Edit(Computer model)
     {
-        if(ModelState.IsValid){
+        if (!ModelState.IsValid)
+        {
+            model.Manufacturers = service.FindAllManufacturers()
+                .Select(m => new SelectListItem() { Value = m.Id.ToString(), Text = m.Name })
+                .ToList();
             return View(model);
         }
 
         service.UpdateComputer(model);
-        return RedirectToAction("Index");;
+        return RedirectToAction("Index");
     }
     [HttpGet]
     public IActionResult Delete(int id)
