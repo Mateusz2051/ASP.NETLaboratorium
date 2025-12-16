@@ -1,9 +1,11 @@
 using Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<ComputerEntity> Computers { get; set; }
     public DbSet<ManufacturerEntity> Manufacturers { get; set; }
@@ -21,6 +23,73 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+        
+
+        string ADMIN_ID = Guid.NewGuid().ToString();
+        string ROLE_ID = Guid.NewGuid().ToString();
+
+
+        modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+        {
+            Name = "admin",
+            NormalizedName = "ADMIN",
+            Id = ROLE_ID,
+            ConcurrencyStamp = ROLE_ID
+        });
+
+        var admin = new IdentityUser
+        {
+            Id = ADMIN_ID,
+            Email = "adam@wsei.edu.pl",
+            EmailConfirmed = true,
+            UserName = "adam",
+            NormalizedUserName = "ADAM",
+            NormalizedEmail = "ADAM@WSEI.EDU.PL"
+        };
+
+        PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
+        admin.PasswordHash = ph.HashPassword(admin, "1234abcd!@#$ABCD");
+        
+        modelBuilder.Entity<IdentityUser>().HasData(admin);
+
+        modelBuilder.Entity<IdentityUserRole<string>>()
+            .HasData(new IdentityUserRole<string>
+            {
+                RoleId = ROLE_ID,
+                UserId = ADMIN_ID
+            });
+
+        string USER_ID = Guid.NewGuid().ToString();
+        string USER_ROLE_ID = Guid.NewGuid().ToString();
+
+        modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+        {
+            Name = "user",
+            NormalizedName = "USER",
+            Id = USER_ROLE_ID,
+            ConcurrencyStamp = USER_ROLE_ID
+        });
+
+        var student = new IdentityUser
+        {
+            Id = USER_ID,
+            Email = "student@wsei.edu.pl",
+            EmailConfirmed = true,
+            UserName = "student",
+            NormalizedUserName = "STUDENT",
+            NormalizedEmail = "STUDENT@WSEI.EDU.PL"
+        };
+        student.PasswordHash = ph.HashPassword(student, "1234abcd!@#$ABCD");
+        modelBuilder.Entity<IdentityUser>().HasData(student);
+
+        modelBuilder.Entity<IdentityUserRole<string>>()
+            .HasData(new IdentityUserRole<string>
+            {
+                RoleId = USER_ROLE_ID,
+                UserId = USER_ID
+            });
+
         modelBuilder.Entity<ManufacturerEntity>()
             .OwnsOne(e => e.Address);
 

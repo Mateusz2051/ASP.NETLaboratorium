@@ -1,10 +1,12 @@
 ﻿using Lab0.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Lab0.Controllers;
 
+[Authorize]
 public class ComputerController(IComputerService service) : Controller
 
 {
