@@ -2,6 +2,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<Data.AppDbContext>();
+builder.Services.AddTransient<Lab0.Models.IComputerService, Lab0.Models.EFComputerService>();
 
 var app = builder.Build();
 
@@ -25,5 +27,10 @@ app.MapControllerRoute(
         pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<Data.AppDbContext>();
+    context.Database.EnsureCreated();
+}
 
 app.Run();
